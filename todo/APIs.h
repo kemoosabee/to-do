@@ -16,6 +16,8 @@ void update_dlt(char* fname);
 void update_counter(char* fname);
 void update_refresh(char* fname);
 void update_dou(char* fname);
+void delete_log(char* fname, string dlt_task);
+void update_log(char* fname, string updt_task);
 string getTime();
 
 #endif

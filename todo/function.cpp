@@ -196,10 +196,20 @@ void update_dlt(char* fname) {
 }
 
 
-
 //unfinished
 //to clear the todo list
 void delete_all(char* fname) {
 	ofstream fout(fname);
 	fout.close();
+}
+
+
+void delete_log(char* fname, string dlt_task) {
+	ofstream fout("log",ios::app);
+	fout <<dlt_task << "    "<<"deleted on  " << getTime() << endl;
+}
+
+void update_log(char* fname, string updt_task) {
+	ofstream fout("log", ios::app);
+	fout << updt_task << "    " << "update on  " << getTime() << endl;
 }

@@ -62,12 +62,14 @@ int main()
 
 	//createdb(name_db);
 	if (ans == 'N') {
+		system("cls");
 		cout << "Name your to-do list" << endl;
 		cin >> name_db;
 		createdb(name_db);
 	}
 	else if (ans == 'O')
 	{
+		system("cls");
 		cout << "Please enter the todo list you wish to edit /open" << endl;
 		cin >> name_db;
 		openDb(name_db);
@@ -84,6 +86,7 @@ int main()
 
 		if (api == "CREATE")
 		{
+			system("cls");
 			cout << "Please enter your task" << endl;
 			string task;
 			cin.ignore();
@@ -93,6 +96,7 @@ int main()
 		}
 
 		else if (api == "RETRIEVE") {
+			system("cls");
 			cout << "Which task do you wish to retrieve" << endl;
 			string num_task;
 			cin >> num_task;
@@ -107,20 +111,25 @@ int main()
 				<< "For clearing the to-do list, please enter ALL" << endl;
 			cin >> dlt_task;
 			//a function to delete task, or all task
-			if (dlt_task == "ALL")
+			if (dlt_task == "ALL") {
 				delete_all(name_db);
+				system("cls");
+			}
 			else
 			{
 				delete_todo(name_db, dlt_task);
 				update_dlt(name_db);
+				update_counter(name_db);
+				delete_log(name_db,dlt_task);
+				system("cls");
 			}
 		}
 		else if (api == "GET")
 		{
+			system("cls");
 			cout << "What kind of tasks do you wish to get(ALL,DONE,UNDONE)"
 				<< endl;
 			string ans;
-
 			cin >> ans;
 			get(name_db, ans);
 
@@ -128,6 +137,7 @@ int main()
 
 		else if (api == "COUNT")
 		{
+			system("cls");
 			cout << countTask(name_db);
 			cout << endl;
 		}
@@ -137,16 +147,12 @@ int main()
 			cout << "Which task do you wish to update?" << endl;
 			string task;
 			cin >> task;
-			if (task == "ALL") {
-				update_counter(name_db);
-			}
-			else
-			{
-				updateStatus(name_db, task);
-				update_dou(name_db);
-			}
+			system("cls");
+			updateStatus(name_db, task);
+			update_dou(name_db);
+			update_log(name_db, task);
+			
 		}
-
 		else cout << "You enter the wrong command, please try again" << endl;
 		
 	}
