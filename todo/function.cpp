@@ -10,18 +10,32 @@
 using namespace std;
 
 
-//unfinish,buggy
 //to update the task's counter after doing modification
 void update_counter(char* fname) {
 	ifstream fin(fname);
 	ofstream fout("temp_ctr");
-	string read;
-	int counter = 1;
-	while (getline(fin, read)) {
-		//std::string key = std::to_string(counter) + "  ";
-		read.replace(read.begin(), read.end(), "1  ", "TEST");
-
+	string read,task,counter,status,dt;
+	int count = 1;
+	fin >> counter >> task >> status >> dt;
+	while (fin) {
+		fout << count << "   "
+			<< task << "   " << status <<
+			"   " << dt << endl;
+		fin >> counter >> task >> status >> dt;
+		count++;
 	}
+	update_refresh(fname);
+	fin.close();
+	fout.close();
+}
+
+void update_refresh(char* fname) {
+	ifstream fin("temp_ctr");
+	ofstream fout(fname);
+	string read;
+	while (getline(fin, read))
+		fout << read << endl;
+	
 }
 
 //to register current time into log .
@@ -37,7 +51,7 @@ string getTime()
 void createTask(char* fname, string task) {
 
 	ofstream fout(fname, ios::app);
-	//replace(task.begin(), task.end(), ' ', '_');
+	replace(task.begin(), task.end(), ' ', '_');
 
 	fout << countTask(fname)+1 << "   ";
 	fout << task << "   " << "UNDONE" << "   ";
@@ -57,6 +71,7 @@ int countTask(char* fname) {
 		counter++;
 	}
 	return counter;
+	fin.close();
 }
 
 //unfinish
@@ -134,21 +149,25 @@ void delete_todo(char* fname,string num) {
 			fout << read << endl;
 		}
 	}
+	fin.close();
+	fout.close();
 }
 
 //update the todo list after deleting it
 void update_dlt(char* fname) {
 	string task;
-	int counter;
 	ifstream fin("temp_dlt");
 	ofstream fout(fname);
 	while (getline(fin, task)) {
 		fout << task << endl;
 	}
+	fin.close();
+	fout.close();
 }
 
 //unfinished
 //to clear the todo list
 void delete_all(char* fname) {
 	ofstream fout(fname);
+	fout.close();
 }
