@@ -7,12 +7,23 @@
 
 using namespace std;
 
+bool fexist(char* fname)
+{
+	ifstream fin;
+	fin.open(fname);
+
+	bool f_exist = fin.is_open();
+	fin.close();
+	return f_exist;
+}
+
+
 //create a empty database 
 void createdb(char* fname)
 {
 	ofstream fout(fname);
 	//to prevent overwrting todo list without knowing it
-	if (fout) {
+	if (fexist(fname)==1) {
 		cout << "You enter an existing name, do you sure you want to overwrite it?" << endl;
 		cout << "Please enter Y/N" << endl;
 		char yn;
@@ -20,6 +31,7 @@ void createdb(char* fname)
 		if (yn == 'N' || yn == 'n')
 			return ;
 	}
+	fout.close();
 
 }
 //open an existing todo list
@@ -32,7 +44,7 @@ void openDb(char* fname)
 		cout << "If you wish to terminate this program please enter END" << endl;
 
 		cin >> fname;
-		if (fname == "END") //doesnt work, this is to terminate the cycle
+		if (fname == "END") //doesnt always work, this is to terminate the cycle
 			return;
 		fin.open(fname);
 	}
@@ -82,8 +94,7 @@ int main()
 
 		else if (api == "RETRIEVE") {
 			cout << "Which task do you wish to retrieve" << endl;
-				
-			int num_task = 0;
+			string num_task;
 			cin >> num_task;
 			retrieve(name_db, num_task);
 			// a function to retrieve task.
@@ -96,6 +107,13 @@ int main()
 				<< "For clearing the to-do list, please enter ALL" << endl;
 			cin >> dlt_task;
 			//a function to delete task, or all task
+			if (dlt_task == "ALL")
+				delete_all(name_db);
+			else
+			{
+				delete_todo(name_db, dlt_task);
+				update_dlt(name_db);
+			}
 		}
 		else if (api == "GET")
 		{
@@ -114,7 +132,16 @@ int main()
 			cout << endl;
 		}
 
+		else if (api == "UPDATE")
+		{
+			cout << "Which task do you wish to update?" << endl;
+			string task;
+			cin >> task;
+			update_counter(name_db);
+		}
+
 		else cout << "You enter the wrong command, please try again" << endl;
+		
 	}
 
 

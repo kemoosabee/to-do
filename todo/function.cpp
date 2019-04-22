@@ -9,6 +9,21 @@
 
 using namespace std;
 
+
+//unfinish,buggy
+//to update the task's counter after doing modification
+void update_counter(char* fname) {
+	ifstream fin(fname);
+	ofstream fout("temp_ctr");
+	string read;
+	int counter = 1;
+	while (getline(fin, read)) {
+		//std::string key = std::to_string(counter) + "  ";
+		read.replace(read.begin(), read.end(), "1  ", "TEST");
+
+	}
+}
+
 //to register current time into log .
 string getTime()
 {
@@ -22,8 +37,7 @@ string getTime()
 void createTask(char* fname, string task) {
 
 	ofstream fout(fname, ios::app);
-	replace(task.begin(), task.end(), ' ', '_');
-	int test = 10;
+	//replace(task.begin(), task.end(), ' ', '_');
 
 	fout << countTask(fname)+1 << "   ";
 	fout << task << "   " << "UNDONE" << "   ";
@@ -46,32 +60,30 @@ int countTask(char* fname) {
 }
 
 //unfinish
-void updateStatus(char* fname,int num) {
+void updateStatus(char* fname,string num) {
 	ifstream fin(fname);
+	string read;
+	
 	 
 }
 
 //finished, to retrieve certain task from todo list, 
 //by given the counter of the task
-void retrieve(char* fname, int num) {
+void retrieve(char* fname, string num) {
 
 	ifstream fin(fname);
-	string task, dt, status;
+	string read;
+	string key = num + "  ";
 	int counter;
-	while (!fin.eof()) {
-		fin >> counter >> task >> status >> dt;
-		if (counter == num) {
-			replace(task.begin(), task.end(), '_', ' ');
-			replace(dt.begin(), dt.end(), '_', ' ');
-			cout << counter << "   " << task << "  " << status <<
-				"   " << dt << endl;
-		
+	while (getline(fin,read)){
+		if (read.find(key, 0) != string::npos) {
+			replace(read.begin(), read.end(), '_', ' ');
+			cout << read << endl;
 		}
-		
+			
 	}
 	fin.close();
 }
-
 
 //unfix bug,the last line of the file tend to print twice
 //filter (done/undone) or all
@@ -79,58 +91,59 @@ void get(char* fname, string ans) {
 	ifstream fin(fname);
 	int counter;
 	string search;
-	string task, dt, status;
 	if (ans == "ALL")
 	{
-		while (!fin.eof()) {
-
-			fin >> counter >> task >> status >> dt;
-			replace(task.begin(), task.end(), '_', ' ');
-			replace(dt.begin(), dt.end(), '_', ' ');
-			cout << counter << "  " << task <<
-				"   " << status << "   " << dt << endl;
+		while (getline(fin,search)) {
+			replace(search.begin(), search.end(), '_', ' ');
+			cout << search << endl;
 		}
 
 	}
-	else if (ans == "DONE") {
-		while (!fin.eof()) {
-			fin >> counter >> task >> status >> dt;
-			if (status == "DONE")
-			{
-				replace(task.begin(), task.end(), '_', ' ');
-				replace(dt.begin(), dt.end(), '_', ' ');
-				cout << counter << "  " << task <<
-					"   " << status << "   " << dt << endl;
+	else if (ans == "UNDONE") {
+		while (getline(fin,search)) {
+			if (search.find("UNDONE",0)!=string::npos){
+				replace(search.begin(), search.end(), '_', ' ');
+				cout << search << endl;
+
 			}
 		}
 	}
-	else if (ans == "UNDONE") {
-		while (!fin.eof()) {
-			fin >> counter >> task >> status >> dt;
-			if (status == "UNDONE")
-			{
-				replace(task.begin(), task.end(), '_', ' ');
-				replace(dt.begin(), dt.end(), '_', ' ');
-				cout << counter << "  " << task <<
-					"   " << status << "   " << dt << endl;
+	else if (ans == "DONE") {
+		while (getline(fin, search)) {
+			if (search.find(" DONE",0) != string::npos){
+				replace(search.begin(), search.end(), '_', ' ');
+				cout << search << endl;
+
 			}
 		}
 	}
 	else cout << "Please enter only ALL/ DONE/ UNDONE" << endl;
+	fin.close();
 
 }
 
 //unfinished
-//to delete specific line of code
-void delete_todo(char* fname,int num) {
-	string task,status,dt;
-	int counter;
+//to delete specific line of todo list
+void delete_todo(char* fname,string num) {
+	string read;
+	string key = num + "  ";
 	ifstream fin(fname);
-	while (!fin.eof()) {
-		fin >> counter >> task >> status >> dt;
-		if (num == counter) {
-			fin.clear();
+	ofstream fout("temp_dlt");
+	while (getline(fin,read)) {
+		if (read.find(key,0) == string::npos) {
+			fout << read << endl;
 		}
+	}
+}
+
+//update the todo list after deleting it
+void update_dlt(char* fname) {
+	string task;
+	int counter;
+	ifstream fin("temp_dlt");
+	ofstream fout(fname);
+	while (getline(fin, task)) {
+		fout << task << endl;
 	}
 }
 
@@ -138,5 +151,4 @@ void delete_todo(char* fname,int num) {
 //to clear the todo list
 void delete_all(char* fname) {
 	ofstream fout(fname);
-
 }

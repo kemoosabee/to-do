@@ -6,12 +6,14 @@
 using namespace std;
 
 void createTask(char* fname, string task);
-void updateStatus(char* fname,int num);
-void retrieve(char* fname, int num);
+void updateStatus(char* fname,string num);
+void retrieve(char* fname, string num);
 void get(char* fname, string status);
 int countTask(char* fname);
-void delete_todo(char* fname,int num);
+void delete_todo(char* fname,string num);
 void delete_all(char* fname);
+void update_dlt(char* fname);
+void update_counter(char* fname);
 string getTime();
 
 #endif
