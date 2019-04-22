@@ -117,10 +117,10 @@ int main()
 			}
 			else
 			{
+				delete_log(name_db, dlt_task);
 				delete_todo(name_db, dlt_task);
 				update_dlt(name_db);
 				update_counter(name_db);
-				delete_log(name_db,dlt_task);
 				system("cls");
 			}
 		}
