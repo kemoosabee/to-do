@@ -74,12 +74,43 @@ int countTask(char* fname) {
 	fin.close();
 }
 
+void update_dou(char* fname) {
+	ifstream fin("temp_sts");
+	ofstream fout(fname);
+	string read;
+	while (getline(fin, read)) {
+		fout << read << endl;
+	}
+	fin.close();
+	fout.close();
+}
+
+
 //unfinish
 void updateStatus(char* fname,string num) {
+	update_counter(fname);
 	ifstream fin(fname);
-	string read;
-	
-	 
+	ofstream fout("temp_sts");
+	string read, task, counter, status, dt;
+	string key = num + "  ";
+	fin >> counter >> task >> status >> dt;
+	while (fin) {
+		
+		if (counter == num) {
+			fout << counter << "   "
+				<< task << "   " << "DONE" <<
+				"   " << dt << endl;
+		}
+		else {
+			fout << counter << "   "
+				<< task << "   " << status <<
+				"   " << dt << endl;
+		}
+
+		fin >> counter >> task >> status >> dt;
+	}
+	fin.close();
+	fout.close();
 }
 
 //finished, to retrieve certain task from todo list, 
@@ -89,7 +120,6 @@ void retrieve(char* fname, string num) {
 	ifstream fin(fname);
 	string read;
 	string key = num + "  ";
-	int counter;
 	while (getline(fin,read)){
 		if (read.find(key, 0) != string::npos) {
 			replace(read.begin(), read.end(), '_', ' ');
@@ -164,6 +194,8 @@ void update_dlt(char* fname) {
 	fin.close();
 	fout.close();
 }
+
+
 
 //unfinished
 //to clear the todo list

@@ -137,7 +137,14 @@ int main()
 			cout << "Which task do you wish to update?" << endl;
 			string task;
 			cin >> task;
-			update_counter(name_db);
+			if (task == "ALL") {
+				update_counter(name_db);
+			}
+			else
+			{
+				updateStatus(name_db, task);
+				update_dou(name_db);
+			}
 		}
 
 		else cout << "You enter the wrong command, please try again" << endl;

@@ -15,6 +15,7 @@ void delete_all(char* fname);
 void update_dlt(char* fname);
 void update_counter(char* fname);
 void update_refresh(char* fname);
+void update_dou(char* fname);
 string getTime();
 
 #endif
