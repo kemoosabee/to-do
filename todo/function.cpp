@@ -235,3 +235,13 @@ void update_log(char* fname, string updt_task) {
 	fin.close();
 	fout.close();;
 }
+
+void show_log() {
+	ifstream fin("log");
+	//
+	ofstream fout("temp_log");
+	string read;
+	while (getline(fin, read)) {
+		cout << read << endl;
+	}
+}

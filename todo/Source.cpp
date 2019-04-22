@@ -153,6 +153,11 @@ int main()
 			update_log(name_db, task);
 			
 		}
+
+		else if (api == "LOG")
+		{
+			show_log();
+		}
 		else cout << "You enter the wrong command, please try again" << endl;
 		
 	}
