@@ -8,7 +8,7 @@ using namespace std;
 void createTask(char* fname, string task);
 void updateStatus(char* fname,string num);
 void retrieve(char* fname, string num);
-void get(char* fname, string status);
+void get_task(char* fname, string status);
 int countTask(char* fname);
 void delete_todo(char* fname,string num);
 void delete_all(char* fname);

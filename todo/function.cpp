@@ -91,7 +91,7 @@ void updateStatus(char* fname,string num) {
 	update_counter(fname);
 	ifstream fin(fname);
 	ofstream fout("temp_sts");
-	string read, task, counter, status, dt;
+	string task, counter, status, dt;
 	string key = num + "  ";
 	fin >> counter >> task >> status >> dt;
 	while (fin) {
@@ -132,7 +132,7 @@ void retrieve(char* fname, string num) {
 
 //unfix bug,the last line of the file tend to print twice
 //filter (done/undone) or all
-void get(char* fname, string ans) {
+void get_task(char* fname, string ans) {
 	ifstream fin(fname);
 	int counter;
 	string search;
@@ -205,11 +205,33 @@ void delete_all(char* fname) {
 
 
 void delete_log(char* fname, string dlt_task) {
-	ofstream fout("log",ios::app);
-	fout <<dlt_task << "    "<<"deleted on  " << getTime() << endl;
+	ifstream fin(fname);
+	ofstream fout("log", ios::app);
+	string counter, task, status, dt;
+	fin >> counter >> task >> status >> dt;
+	while (fin) {
+		if (counter == dlt_task) {
+			fout << task << "   "
+				<< "deleted on " << getTime() << endl;
+		}
+		fin >> counter >> task >> status >> dt;
+	}
+	fin.close();
+	fout.close();
 }
 
 void update_log(char* fname, string updt_task) {
+	ifstream fin(fname);
 	ofstream fout("log", ios::app);
-	fout << updt_task << "    " << "update on  " << getTime() << endl;
+	string counter, task, status, dt;
+	fin >> counter >> task >> status >> dt;
+	while (fin) {
+		if (counter == updt_task) {
+			fout <<  task << "   "
+				<< "finished on " << getTime() << endl;
+		}
+		fin >> counter >> task >> status >> dt;
+	}
+	fin.close();
+	fout.close();;
 }

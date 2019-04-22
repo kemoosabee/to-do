@@ -131,7 +131,7 @@ int main()
 				<< endl;
 			string ans;
 			cin >> ans;
-			get(name_db, ans);
+			get_task(name_db, ans);
 
 		}
 
