@@ -1,5 +1,4 @@
 # to-do
-code assignment for hem.com
 
 This program is written in Visual Studio.
 To those who wish to run this program in visual studio, 
