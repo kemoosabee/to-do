@@ -3,6 +3,7 @@
 #include<chrono>
 #include<string>
 #include<ctime>
+#include<cstdlib>
 #include"APIs.h"
 
 using namespace std;
@@ -51,10 +52,13 @@ void openDb(char* fname)
 		cout << "If you wish to terminate this program please enter END" << endl;
 
 		cin >> fname;
-		if (fname == "END") //doesnt always work, this is to terminate the cycle
-			return;
+		if (fname == "END")//terminate code here doesnt work
+		{
+			//somthing to terminate the program
+		}
 		fin.open(fname);
 	}
+	fin.close();
 }
 
 int main()
@@ -74,8 +78,6 @@ int main()
 			cin >> name_db;
 			createdb(name_db);
 			ofstream fout(name_db);
-
-			
 			flag = 1;
 		}
 
@@ -129,6 +131,7 @@ int main()
 			//a function to delete task, or all task
 			if (dlt_task == "ALL") {
 				delete_all(name_db);
+				dlt_all_log();
 				system("cls");
 			}
 			else
@@ -177,7 +180,6 @@ int main()
 		else cout << "You enter the wrong command, please try again" << endl;
 		
 	}
-
 
 	return 0;
 }

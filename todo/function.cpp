@@ -35,7 +35,8 @@ void update_refresh(char* fname) {
 	string read;
 	while (getline(fin, read))
 		fout << read << endl;
-	
+	fout.close();
+	fin.close();
 }
 
 //to register current time into log .
@@ -56,6 +57,8 @@ void createTask(char* fname, string task) {
 	fout << countTask(fname)+1 << "   ";
 	fout << task << "   " << "UNDONE" << "   ";
 	fout << getTime();
+
+	create_log(task);
 
 	fout.close();
 	
@@ -207,6 +210,13 @@ void delete_all(char* fname) {
 	fout.close();
 }
 
+void dlt_all_log() {
+	ofstream fout("log", ios::app);
+	fout << "All task has been deleted   " << getTime() << endl;
+	fout.close();
+}
+
+
 //finished, to register the delete into log file
 void delete_log(char* fname, string dlt_task) {
 	ifstream fin(fname);
@@ -215,6 +225,7 @@ void delete_log(char* fname, string dlt_task) {
 	fin >> counter >> task >> status >> dt;
 	while (fin) {
 		if (counter == dlt_task) {
+			replace(task.begin(), task.end(), '_', ' ');
 			fout << task << "   "
 				<< "deleted on " << getTime() << endl;
 		}
@@ -232,6 +243,7 @@ void update_log(char* fname, string updt_task) {
 	fin >> counter >> task >> status >> dt;
 	while (fin) {
 		if (counter == updt_task) {
+			replace(task.begin(), task.end(), '_', ' ');
 			fout <<  task << "   "
 				<< "finished on " << getTime() << endl;
 		}
@@ -239,6 +251,15 @@ void update_log(char* fname, string updt_task) {
 	}
 	fin.close();
 	fout.close();;
+}
+
+void create_log(string create_task) {
+	ofstream fout("log", ios::app);
+	replace(create_task.begin(), create_task.end(), '_', ' ');
+	fout << create_task << "  "
+		<< "created on " << getTime() << endl;
+
+	fout.close();
 }
 
 //finished, to print out log
@@ -250,4 +271,6 @@ void show_log() {
 	while (getline(fin, read)) {
 		cout << read << endl;
 	}
+	fin.close();
+	fout.close();
 }
