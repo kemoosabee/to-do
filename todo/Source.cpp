@@ -7,6 +7,8 @@
 
 using namespace std;
 
+//to check is file name exist
+//doesnt seem to work
 bool fexist(char* fname)
 {
 	ifstream fin;
@@ -21,18 +23,23 @@ bool fexist(char* fname)
 //create a empty database 
 void createdb(char* fname)
 {
-	ofstream fout(fname);
+	bool flag = fexist(fname);
 	//to prevent overwrting todo list without knowing it
-	if (fexist(fname)==1) {
+	while (flag==true) {
 		cout << "You enter an existing name, do you sure you want to overwrite it?" << endl;
 		cout << "Please enter Y/N" << endl;
 		char yn;
 		cin >> yn;
-		if (yn == 'N' || yn == 'n')
-			return ;
+		if (yn == 'N' || yn == 'n') {
+			cout << "Please enter a new name for you todo list" << endl;
+			cin >> fname;
+			createdb(fname);
+		}
+		else if (yn == 'Y' || yn == 'y')
+			flag = false;
+			
 	}
-	fout.close();
-
+	
 }
 //open an existing todo list
 void openDb(char* fname)
@@ -54,36 +61,45 @@ int main()
 {
 	char name_db[100];
 	string api;
-	char ans;
+	int flag = 0;
+	string ans;
 	cout << "Do you wish to create a new todo list or edit the old todo list?" << endl;
 	cout << "N for creating a new todo list"<< endl;
 	cout << "O for editing or reading the old todo list" << endl;
-	cin >> ans;
+	while (flag == 0) {
+		getline(cin, ans);
+		if (ans == "N") {
+			system("cls");
+			cout << "Name your to-do list" << endl;
+			cin >> name_db;
+			createdb(name_db);
+			ofstream fout(name_db);
 
-	//createdb(name_db);
-	if (ans == 'N') {
-		system("cls");
-		cout << "Name your to-do list" << endl;
-		cin >> name_db;
-		createdb(name_db);
+			
+			flag = 1;
+		}
+
+		//editing/call out existing todo list
+		else if (ans == "O")
+		{
+			system("cls");
+			cout << "Please enter the todo list you wish to edit /open" << endl;
+			cin >> name_db;
+			openDb(name_db);
+			flag = 1;
+
+		}
+		else {
+			cout << "Plase enter only New / Old" << endl;
+		}
 	}
-	else if (ans == 'O')
-	{
-		system("cls");
-		cout << "Please enter the todo list you wish to edit /open" << endl;
-		cin >> name_db;
-		openDb(name_db);
-
-	}
-	else cout << "Plase enter only New / Old" << endl;
-
 	while (api != "END")
 	{
 		cout << "What do you wish to do";
 		cout << "(CREATE/ RETRIEVE/ DELETE/ GET/ COUNT)" << endl;
 		cout << "To terminate the program enter END" << endl;
 		cin >> api;
-
+		
 		if (api == "CREATE")
 		{
 			system("cls");
@@ -138,7 +154,7 @@ int main()
 		else if (api == "COUNT")
 		{
 			system("cls");
-			cout << countTask(name_db);
+			cout << countTask(name_db) << "  tasks in the todo list.";
 			cout << endl;
 		}
 

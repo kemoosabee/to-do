@@ -74,6 +74,8 @@ int countTask(char* fname) {
 	fin.close();
 }
 
+
+//finished, a method to update the task status and send back into todo list
 void update_dou(char* fname) {
 	ifstream fin("temp_sts");
 	ofstream fout(fname);
@@ -86,7 +88,8 @@ void update_dou(char* fname) {
 }
 
 
-//unfinish
+
+//finished, to update the task's status
 void updateStatus(char* fname,string num) {
 	update_counter(fname);
 	ifstream fin(fname);
@@ -125,13 +128,14 @@ void retrieve(char* fname, string num) {
 			replace(read.begin(), read.end(), '_', ' ');
 			cout << read << endl;
 		}
+		//else cout << "Please enter a correct value for your task." << endl;
 			
 	}
 	fin.close();
 }
 
-//unfix bug,the last line of the file tend to print twice
-//filter (done/undone) or all
+
+//finished, to filter task (done/undone) or all
 void get_task(char* fname, string ans) {
 	ifstream fin(fname);
 	int counter;
@@ -167,8 +171,8 @@ void get_task(char* fname, string ans) {
 
 }
 
-//unfinished
-//to delete specific line of todo list
+
+//finished, to delete specific line of todo list
 void delete_todo(char* fname,string num) {
 	string read;
 	string key = num + "  ";
@@ -196,14 +200,14 @@ void update_dlt(char* fname) {
 }
 
 
-//unfinished
+//finished
 //to clear the todo list
 void delete_all(char* fname) {
 	ofstream fout(fname);
 	fout.close();
 }
 
-
+//finished, to register the delete into log file
 void delete_log(char* fname, string dlt_task) {
 	ifstream fin(fname);
 	ofstream fout("log", ios::app);
@@ -220,6 +224,7 @@ void delete_log(char* fname, string dlt_task) {
 	fout.close();
 }
 
+//finisehd, to regiester the status change log into log file
 void update_log(char* fname, string updt_task) {
 	ifstream fin(fname);
 	ofstream fout("log", ios::app);
@@ -236,6 +241,7 @@ void update_log(char* fname, string updt_task) {
 	fout.close();;
 }
 
+//finished, to print out log
 void show_log() {
 	ifstream fin("log");
 	//
