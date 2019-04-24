@@ -4,12 +4,11 @@
 #include<string>
 #include<ctime>
 #include<cstdlib>
-#include"APIs.h"
+#include"function.h"
 
 using namespace std;
 
 //to check is file name exist
-//doesnt seem to work
 bool fexist(char* fname)
 {
 	ifstream fin;
@@ -22,6 +21,9 @@ bool fexist(char* fname)
 
 
 //create a empty database 
+//minor bug, if user choose create a new file, enter an existing name
+//and choose not to overwrite
+//and enter a new name, bug start here
 void createdb(char* fname)
 {
 	bool flag = fexist(fname);
@@ -46,18 +48,22 @@ void createdb(char* fname)
 void openDb(char* fname)
 {
 	ifstream fin(fname);
+	string key;
 
+	
 	while (!fin) {
 		cout << "You entered a non existing file name, please try again." << endl;
 		cout << "If you wish to terminate this program please enter END" << endl;
 
 		cin >> fname;
-		if (fname == "END")//terminate code here doesnt work
+		key = fname;
+		if (key == "END")//terminate code here doesnt work
 		{
-			//somthing to terminate the program
+			exit(0);
 		}
 		fin.open(fname);
 	}
+	
 	fin.close();
 }
 
